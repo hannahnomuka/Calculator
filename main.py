@@ -57,7 +57,7 @@ def home():
     # Add your own profile details here
     profile = {
         "name": "Hannah",
-        "bio": "Aspiring Developer passionate about coding and creating awesome projects.",
+        "bio": "Aspiring Developer passionate about coding and creating awesome projects to express their feelings, life, and sharing it to people.",
         "profile_pic": "images/IMG_0132.jpeg",
         "github": "https://github.com/hannahnomuka",
         "projects": [
