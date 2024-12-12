@@ -1,8 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for
+import requests
 
 app = Flask(__name__)
 
 tasks = []
+
+# Replace 'your_api_key' with your actual OpenWeatherMap API key
+API_KEY = "d08a9771ceb45a228e218dab149857bd"
+BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
+
 
 @app.route("/calculator", methods=["GET", "POST"])
 def calculator():
@@ -36,6 +42,35 @@ def todo():
         if task:
             tasks.append(task)
     return render_template("todo.html", tasks=tasks)
+
+@app.route("/weather", methods=["GET", "POST"])
+def weather():
+    if request.method == "POST":
+        city = request.form.get("city")
+        params = {
+            "q": city,
+            "appid": API_KEY,
+            "units": "metric"  # Use 'imperial' for Fahrenheit
+        }
+        response = requests.get(BASE_URL, params=params)
+        data = response.json()
+        print(data)  # Debugging: Print API response
+
+        if response.status_code == 200:
+            weather = {
+                "city": data["name"],
+                "temperature": data["main"]["temp"],
+                "description": data["weather"][0]["description"],
+                "icon": data["weather"][0]["icon"]
+            }
+            return render_template("weather.html", weather=weather)
+        else:
+            return render_template("weather_form.html", error=data.get("message", "City not found!"))
+
+    return render_template("weather_form.html")
+
+
+    
 
 @app.route("/")
 def home():
