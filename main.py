@@ -70,7 +70,7 @@ def weather():
     return render_template("weather_form.html")
 
 
-    
+
 
 @app.route("/")
 def home():
@@ -83,7 +83,7 @@ def home():
         "projects": [
             {"name": "Calculator", "link": "https://hannahnomuka.pythonanywhere.com/calculator"},
             {"name": "To-Do List", "link": url_for("todo")},
-            {"name": "Project 3", "link": "https://yourprojectlink3.com"}
+            {"name": "Weather", "link": url_for("weather")}
         ]
     }
     return render_template("index.html", profile=profile)
